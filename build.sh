@@ -26,12 +26,12 @@ emcc main.c -o $out_dir/index.html \
     -lz \
     -lsqlite3 \
     --shell-file ./shell.html \
-    -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'FS', 'HEAP8']" \
+    -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'FS', 'HEAP8', 'callMain']" \
     -s "EXPORTED_FUNCTIONS=['_main', '_do_nothing', '_print_str']" \
     -s "ALLOW_MEMORY_GROWTH=1" \
-    -s "WASM=1" \
     -s "INITIAL_MEMORY=16MB" \
     -s "ALLOW_TABLE_GROWTH=1" \
-    # -Os
+    -s SAFE_HEAP=1 \
+    -s INLINING_LIMIT=1 
 
 cp -r $builddir/usr $out_dir/usr

@@ -3,8 +3,12 @@
 # Run JS code in the browser.
 cdef extern void emscripten_run_script(char *script)
 
+
+def print_str_py(s):
+    print("Received string:", s)
+
 cdef public void print_str(str s):
-    print("Received string:", f"{s!r}")
+    print_str_py(s)
 
 cdef public void do_nothing(str s): pass
 
