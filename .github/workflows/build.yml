@@ -1,0 +1,47 @@
+on:
+  push:
+    branches: [main]
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Pull submodules
+        run: git submodule update --init --recursive --depth 1
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements.txt
+
+      - run: source ./build_cpython_for_wasm.sh
+      - run: source ./build.sh
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./out"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
