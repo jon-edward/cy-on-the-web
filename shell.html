@@ -86,17 +86,21 @@
           return Uint8Array.from(xhr.response, c => c.charCodeAt(0));
         };
 
+        // Copy over the necessary files
         const files = [
           "usr/local/lib/python312.zip",
           "usr/local/lib/python3.12/lib-dynload/.empty",
           "usr/local/lib/python3.12/os.py",
         ]
-
         Module.FS.mkdirTree("/usr/local/lib/python3.12/lib-dynload");
-
         for (const file of files) {
           Module.FS.writeFile(file, readBinary(file), { canOwn: true });
         }
+
+        // Start the main loop
+        window.setInterval(() => {
+          Module["_step_canvas"]();
+        }, 1000 / 60);
       };
     </script>
     {{{ SCRIPT }}}

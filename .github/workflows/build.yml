@@ -43,7 +43,9 @@ jobs:
       - run: python -m pip install -r requirements.txt
 
       - run: source ./build_cpython_for_wasm.sh
-      - run: source ./build.sh
+      - run: |
+          export IS_PAGES_BUILD=1
+          source ./build.sh
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

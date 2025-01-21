@@ -11,8 +11,15 @@ cython --embed ./main.pyx
 cpython_dir=$(pwd)/cpython
 builddir=$cpython_dir/builddir/emscripten-browser
 
+if [[ -z "${IS_PAGES_BUILD}" ]]; then
+  extra_flags=(-O1 -Wall -Wextra -Werror -g)
+else
+  extra_flags=(-Os)
+fi
+
 emcc main.c -o $out_dir/index.html \
     -I$cpython_dir/Include/ \
+    -I$(pwd) \
     -I$builddir/ \
     -L$builddir/ \
     -L$builddir/Modules/_decimal/libmpdec/ \
@@ -27,11 +34,9 @@ emcc main.c -o $out_dir/index.html \
     -lsqlite3 \
     --shell-file ./shell.html \
     -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'FS', 'HEAP8', 'callMain']" \
-    -s "EXPORTED_FUNCTIONS=['_main', '_do_nothing', '_print_str']" \
+    -s "EXPORTED_FUNCTIONS=['_main', '_step_canvas']" \
     -s "ALLOW_MEMORY_GROWTH=1" \
     -s "INITIAL_MEMORY=16MB" \
-    -s "ALLOW_TABLE_GROWTH=1" \
-    -s SAFE_HEAP=1 \
-    -s INLINING_LIMIT=1 
+    ${extra_flags[@]}
 
 cp -r $builddir/usr $out_dir/usr

@@ -171,5 +171,5 @@ cython_debug/
 .pypirc
 
 out/
-*.c
-*.h
+main.c
+main.h
