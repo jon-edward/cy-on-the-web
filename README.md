@@ -17,16 +17,16 @@ you only need to do this once):
 source ./build_cpython_for_wasm.sh
 ```
 
-To build `main.pyx`, run:
+To build `./out`, run:
 
 ```shell
-source ./build.sh
+make
 ```
 
-Once the build is complete, you can start a server in the `out` directory:
+Once the build is complete, you can start a server from `./out`:
 
 ```shell
-python3 -m http.server --directory ./out -p 8000 --bind 0.0.0.0
+python3 -m http.server --directory ./out
 ```
 
 Then navigate to `http://localhost:8000` in your browser.
