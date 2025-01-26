@@ -48,7 +48,7 @@ jobs:
           pushd emsdk
           source ./emsdk_env.sh
           popd
-          emmake RELEASE=1
+          emmake make RELEASE=1
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
