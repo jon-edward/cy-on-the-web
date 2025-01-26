@@ -1,5 +1,3 @@
-CFILES=$(wildcard cy/*.c)
-
 CPYTHON_DIR=cpython
 BUILDDIR=$(CPYTHON_DIR)/builddir/emscripten-browser
 
@@ -38,9 +36,10 @@ all: out
 out: cy/main.pyx
 	cython cy/main.pyx; \
 	mkdir -p $(OUT); \
-	$(CC) $(CFILES) $(INC) $(LDFLAGS) $(LDLIBS) $(CFLAGS) $(EMFLAGS) -o out/index.html; \
+	$(CC) cy/main.c cy/wrapper.c $(INC) $(LDFLAGS) $(LDLIBS) $(CFLAGS) $(EMFLAGS) -o out/index.html; \
 	cp -r $(BUILDDIR)/usr $(OUT)/usr;
 
 .PHONY: clean
 clean:
-	rm -rf out
+	rm -rf out; \
+	rm -rf ./cy/main.c ./cy/main.h

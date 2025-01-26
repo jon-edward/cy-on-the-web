@@ -42,3 +42,4 @@ print(f"Python (def, no typing): {timeit(lambda: sum_of_squares_py(up_to), numbe
 print(f"Cython (cdef): {timeit(lambda: sum_of_squares_cy(up_to), number=iterations, globals=globals()):.3f}s")
 
 print("\nTry executing Python code from the JS console using: \nModule.ccall('exec_python', null, ['string'], ['print(\"Hello World!\")'])")
+
