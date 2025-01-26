@@ -29,4 +29,4 @@ Once the build is complete, you can start a server from `./out`:
 python3 -m http.server --directory ./out
 ```
 
-Then navigate to `http://localhost:8000` in your browser.
+Then navigate to the test server in your browser.
