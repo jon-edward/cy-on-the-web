@@ -1,5 +1,3 @@
-CC=emcc
-
 CFILES=$(wildcard cy/*.c)
 
 CPYTHON_DIR=cpython
@@ -41,9 +39,6 @@ cy/main.c: cy/main.pyx
 	cython cy/main.pyx
 
 out: cy/main.c
-	EMSDK_QUIET=1; \
-	export EMSDK_QUIET; \
-	cd emsdk; sh ./emsdk_env.sh; cd ..; \
 	mkdir -p $(OUT); \
 	$(CC) $(INC) $(CFILES) $(LDFLAGS) $(LDLIBS) $(CFLAGS) $(EMFLAGS) -o out/index.html; \
 	cp -r $(BUILDDIR)/usr $(OUT)/usr;
