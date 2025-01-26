@@ -35,12 +35,10 @@ endif
 .PHONY: all
 all: out
 
-cy/main.c: cy/main.pyx
-	cython cy/main.pyx
-
-out: cy/main.c
+out: cy/main.pyx
+	cython cy/main.pyx; \
 	mkdir -p $(OUT); \
-	$(CC) $(INC) $(CFILES) $(LDFLAGS) $(LDLIBS) $(CFLAGS) $(EMFLAGS) -o out/index.html; \
+	$(CC) $(CFILES) $(INC) $(LDFLAGS) $(LDLIBS) $(CFLAGS) $(EMFLAGS) -o out/index.html; \
 	cp -r $(BUILDDIR)/usr $(OUT)/usr;
 
 .PHONY: clean
